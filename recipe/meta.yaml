@@ -7,7 +7,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: ac47f10455c069393359a18e41b646185ce7b9a762c9c41b17bf2fbaa6b934dc
 
 build:
@@ -19,15 +19,17 @@ build:
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - lightgbm >=3.2.1
     - xgboost_ray >=0.1.12
     - packaging
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - lightgbm_ray
 
