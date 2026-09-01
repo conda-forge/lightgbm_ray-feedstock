@@ -1,0 +1,55 @@
+schema_version: 1
+
+context:
+  name: lightgbm_ray
+  version: "0.1.9"
+  build_num: 0
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: ac47f10455c069393359a18e41b646185ce7b9a762c9c41b17bf2fbaa6b934dc
+
+build:
+  number: 1
+  noarch: python
+  script:
+    - rm -rf examples
+    - ${{ PYTHON }} -m pip install . -vv --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - lightgbm >=3.2.1
+    - xgboost_ray >=0.1.12
+    - packaging
+
+tests:
+  - python:
+      imports:
+        - lightgbm_ray
+      pip_check: false
+      python_version:
+        - ${{ python_min }}
+        - "*"
+  - requirements:
+      run:
+        - python ${{ python_min }}
+
+about:
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: A Ray backend for distributed LightGBM
+  homepage: https://github.com/ray-project/lightgbm_ray
+  repository: https://github.com/ray-project/lightgbm_ray
+
+extra:
+  recipe-maintainers:
+    - timkpaine
