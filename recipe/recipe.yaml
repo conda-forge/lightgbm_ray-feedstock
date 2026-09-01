@@ -3,7 +3,6 @@ schema_version: 1
 context:
   name: lightgbm_ray
   version: "0.1.9"
-  build_num: 0
 
 package:
   name: ${{ name|lower }}
